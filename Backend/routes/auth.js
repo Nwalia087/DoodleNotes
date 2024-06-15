@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+var jwt = require("jsonwebtoken");
+
+const JWT_SECRET = "mER@mEOWg#AR@AYA";
 
 const { body, validationResult } = require("express-validator");
 
@@ -23,14 +26,19 @@ router.post(
         return res.status(400).json({ error: "sorry yar breakdown horyea si menu bro" });
       }
       const salt = await bcrypt.genSalt(10);
-      console.log(salt);
       const securePassword = await bcrypt.hash(req.body.password, salt);
       user = await User.create({
         name: req.body.name,
         Username: req.body.Username,
         password: securePassword,
       });
-      res.json(user);
+      const data = {
+        user: {
+          id: user.id,
+        },
+      };
+      var token = jwt.sign(data, JWT_SECRET);
+      res.json(token);
     } catch (error) {
       console.error(error.message);
       res.status(500).send("breakdown hogya bro");
