@@ -25,7 +25,8 @@ export default function Navbar() {
       <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
         <Link className="navbar-brand" to="/">
           <img src={postItImage} width="30" height="30" className=" d-inline-block align-top mx-2" alt="" />
-          INoteBook
+          <span className="text-warning">I</span>
+          <span style={{ color: " #29a4d9" }}>N</span>oteBook
         </Link>
         <button
           className="navbar-toggler"

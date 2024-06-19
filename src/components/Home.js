@@ -6,14 +6,19 @@ export default function Home() {
     <>
       <div className="HeroContent mt--5 position-relative" style={{ caretColor: "transparent" }}>
         <h1 style={{ fontSize: "6rem" }}>
-          Welcome to <span className="text-warning">I</span>NoteBook
+          Welcome to <span className="text-warning">I</span>
+          <span style={{ color: " #29a4d9" }}>N</span>oteBook
         </h1>
-        <h4>An easy and safe way to store and access your notes online</h4>
+        <h4 style={{ color: " #29a4d9" }}>
+          An easy and safe way to store and access your{" "}
+          <span span className="text-warning">
+            Notes
+          </span>{" "}
+          online
+        </h4>
         <div className="d-flex heroGifAndFormContainer">
           <form className="mt-5">
-            <h4 className="mb-4">
-              Login to access your <span className="text-warning">N</span>otes
-            </h4>
+            <h4 className="mb-4">Login to access your Notes</h4>
             <div class="mb-3 inputFields">
               <input
                 type="email"
