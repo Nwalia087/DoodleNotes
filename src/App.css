@@ -50,12 +50,12 @@
   -webkit-line-clamp: 5; /* Number of lines to show */
   -webkit-box-orient: vertical;
 }
-.heroGifAndFormContainer > form {
+.heroGifAndFormContainer > div {
   width: 30%;
 }
 
 .heroGifAndFormContainer > img {
-  top: 27%;
+  top: 24%;
   left: 47.4%;
 }
 .dropdown-item:focus,

@@ -6,6 +6,7 @@ import About from "./components/About";
 import NoteState from "./context/NoteState";
 import YourNotes from "./components/YourNotes";
 import AddNewNote from "./components/AddNewNote";
+import ViewNote from "./components/NoteView";
 
 function App() {
   return (
@@ -13,12 +14,13 @@ function App() {
       <NoteState>
         <Router>
           <Navbar />
-          <div className="container contentcontainer my-3" style={{maxWidth:"1290px"}}>
+          <div className="container contentcontainer my-3" style={{ maxWidth: "1290px" }}>
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route exact path="/about" element={<About />} />
               <Route path="/your-notes" element={<YourNotes />} />
               <Route path="/add-new-note" element={<AddNewNote />} />
+              <Route path="/view-note" element={<ViewNote />} />
               <Route path="*" element={<Home />} />
             </Routes>
           </div>

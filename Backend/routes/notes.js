@@ -7,12 +7,9 @@ const { body, validationResult } = require("express-validator");
 //fetching all notes from the user
 router.get("/fetch-all-notes", fetchuser, async (req, res) => {
   try {
-    console.log("Fetching notes for user ID:", req.user.id);
     const notes = await Note.find({ user: req.user.id });
-    console.log("Notes found:", notes);
     res.json(notes);
   } catch (error) {
-    console.error("Error fetching notes:", error.message);
     res.status(500).send("Internal server error");
   }
 });
@@ -46,7 +43,7 @@ router.post(
 router.put(
   "/update-notes/:id",
   fetchuser,
-  [body("description", "description must be 5 characters long").isLength({ min: 5 })], 
+  [body("description", "description must be 5 characters long").isLength({ min: 5 })],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -81,32 +78,27 @@ router.put(
     }
   }
 );
-router.delete(
-  "/delete-notes/:id",
-  fetchuser,
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    try {
-      //for finding if the note exists
-      let note = await Note.findById(req.params.id);
-      if (!note) {
-        return res.status(404).send("not found");
-      }
-      //for finding out if user is acceesing his notes only
-      if (note.user.toString() !== req.user.id) {
-        return res.status(401).send("unauthorised access");
-      }
-      note = await Note.findByIdAndDelete(req.params.id);
-      console.log(note)
-      res.json(note);
-    } catch (error) {
-      console.error(error.message);
-      res.status(500).send("internal server error");
-    }
+router.delete("/delete-notes/:id", fetchuser, async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
   }
-);
+  try {
+    //for finding if the note exists
+    let note = await Note.findById(req.params.id);
+    if (!note) {
+      return res.status(404).send("not found");
+    }
+    //for finding out if user is acceesing his notes only
+    if (note.user.toString() !== req.user.id) {
+      return res.status(401).send("unauthorised access");
+    }
+    note = await Note.findByIdAndDelete(req.params.id);
+    res.json(note);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("internal server error");
+  }
+});
 
 module.exports = router;

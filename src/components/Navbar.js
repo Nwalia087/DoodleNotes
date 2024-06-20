@@ -50,17 +50,17 @@ export default function Navbar() {
                 aria-expanded="false">
                 {activeDropDownItem}
               </Link>
-              <ul className="dropdown-menu">
+              <ul className="dropdown-menu py-0">
                 <li>
                   <Link
                     id="NewNoteDropDownItem"
-                    className={`dropdown-item ${path === "/add-new-note" ? "active" : ""}`}
+                    className={`dropdown-item  ${path === "/add-new-note" ? "active" : ""}`}
                     to="/add-new-note">
                     New Note
                   </Link>
                 </li>
                 <li>
-                  <Link className={`dropdown-item ${path === "/your-notes" ? "active" : ""}`} to="/your-notes">
+                  <Link className={`dropdown-item  ${path === "/your-notes" ? "active" : ""}`} to="/your-notes">
                     Your Notes
                   </Link>
                 </li>
