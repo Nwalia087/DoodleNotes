@@ -4,7 +4,7 @@ import NoteContext from "../context/NoteContext";
 
 export default function NoteComponent(props) {
   const context = useContext(NoteContext);
-  const { noteInView, setNoteInView } = context;
+  const { setNoteInView } = context;
   const navigate = useNavigate();
 
   const handleOnClickViewNote = () => {

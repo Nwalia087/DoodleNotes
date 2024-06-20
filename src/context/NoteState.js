@@ -2,10 +2,9 @@ import NoteContext from "./NoteContext";
 import { useState, useEffect } from "react";
 
 const NoteState = (props) => {
+  const initIsLoggedin = localStorage.getItem("isLogedIn");
   const initNotes = JSON.parse(localStorage.getItem("notes")) || [];
-  const initToken =
-    localStorage.getItem("token") ||
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY2ZjYxNjRiYjU0ZjI1M2JhYTdiMmE2In0sImlhdCI6MTcxODU3NTU0MH0.W0N_xZALdQ9uZJlrV-VyV4JfPEQjOJYyqu5T0bBJiWU";
+  const initToken = localStorage.getItem("token");
   const initNoteInView = JSON.parse(localStorage.getItem("noteInView")) || {
     id: null,
     title: "",
@@ -14,14 +13,17 @@ const NoteState = (props) => {
   const initLoginSignup = localStorage.getItem("loginSignup");
   const [notes, setNotes] = useState(initNotes);
   const [token, setToken] = useState(initToken);
-  const [loginSignup, setLoginSignup] = useState("login");
+  const [loginSignup, setLoginSignup] = useState(initLoginSignup);
   const [noteInView, setNoteInView] = useState(initNoteInView);
-
+  const [isLogedIn, setIslogedIN] = useState(initIsLoggedin);
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
   useEffect(() => {
-    localStorage.setItem("loginSignup", "login");
+    localStorage.setItem("isLogedIn", isLogedIn);
+  }, [isLogedIn]);
+  useEffect(() => {
+    localStorage.setItem("loginSignup", loginSignup);
   }, [loginSignup]);
   useEffect(() => {
     localStorage.setItem("token", token);
@@ -48,9 +50,19 @@ const NoteState = (props) => {
   };
   return (
     <NoteContext.Provider
-      value={{ notes, setNotes, token, fetchAllNotes, setToken, noteInView, setNoteInView, loginSignup, setLoginSignup }}>
+      value={{
+        notes,
+        setNotes,
+        token,
+        fetchAllNotes,
+        setToken,
+        noteInView,
+        setNoteInView,
+        loginSignup,
+        setLoginSignup,
+      }}>
       {props.children}
-    </NoteContext.Provider> 
+    </NoteContext.Provider>
   );
 };
 

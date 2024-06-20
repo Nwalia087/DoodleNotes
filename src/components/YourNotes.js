@@ -5,10 +5,9 @@ import NoteContext from "../context/NoteContext";
 export default function YourNotes() {
   const context = useContext(NoteContext);
   const { notes, fetchAllNotes } = context;
-
   useEffect(() => {
     fetchAllNotes();
-  }, []);
+  }, [fetchAllNotes]);
   return (
     <>
       <div className="YourNotes text-center mt-5 mb-4">

@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import postItImage from "../assets/post-it.png";
+import NoteContext from "../context/NoteContext";
 
 export default function Navbar() {
+  const context = useContext(NoteContext);
+  const { token } = context;
+
   let location = useLocation();
   const currentPath = location.pathname.replace("/inotebook", "/");
 
