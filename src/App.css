@@ -63,10 +63,10 @@
 .dropdown-item:hover,
 .dropdown-item.active,
 .dropdown-item:active {
-  background-color: #ffc107 !important;
+  background-color: #ffc105 !important;
   color: #000;
 }
 
 .btn-primary {
-  background-color: #29a4d9 !important;
+  background-color: #2ba5da !important;
 }

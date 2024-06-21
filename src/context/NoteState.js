@@ -2,6 +2,7 @@ import NoteContext from "./NoteContext";
 import { useState, useEffect } from "react";
 
 const NoteState = (props) => {
+  localStorage.setItem("isLogedIn", "logedOut");
   const initIsLoggedin = localStorage.getItem("isLogedIn");
   const initNotes = JSON.parse(localStorage.getItem("notes")) || [];
   const initToken = localStorage.getItem("token");
@@ -60,6 +61,8 @@ const NoteState = (props) => {
         setNoteInView,
         loginSignup,
         setLoginSignup,
+        isLogedIn,
+        setIslogedIN,
       }}>
       {props.children}
     </NoteContext.Provider>
