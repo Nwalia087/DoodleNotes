@@ -24,7 +24,7 @@ router.post(
     try {
       let user = await User.findOne({ Username: req.body.Username });
       if (user) {
-        return res.status(400).json({ error: "sorry yar breakdown horyea si menu bro" });
+        return res.status(400).json({ error: "you already have an account, please login with your credentials" });
       }
       const salt = await bcrypt.genSalt(10);
       const securePassword = await bcrypt.hash(req.body.password, salt);

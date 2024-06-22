@@ -17,11 +17,11 @@ export default function NoteComponent(props) {
   };
 
   return (
-    <div className=" NoteComponent note my-3 rounded border p-4">
-      <h2>{props.title}</h2>
+    <div className=" NoteComponent bg-white mx-4 note my-3 rounded border p-4">
+      <h2 style={{color:"#2ba5da"}}>{props.title}</h2>
       <p className="mt-4 NoteComponentDescription">{props.description}</p>
       <div className="d-flex flex-row-reverse justify-content-between mt-5">
-        <button type="button" style={{}} onClick={handleOnClickViewNote} className="px-5 text-center btn btn-warning">
+        <button type="button" style={{}} onClick={handleOnClickViewNote} className="px-5 text-white text-center btn btn-warning">
           View Note
         </button>
       </div>

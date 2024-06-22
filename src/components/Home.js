@@ -41,14 +41,14 @@ export default function Home() {
       });
       const result = await response.json();
       if (response.ok) {
-        setIslogedIN(result.name);
+        setIslogedIN({ name: result.name, id: result._id });
         setUserLogedIn(result.name);
       }
     }
   };
   useEffect(() => {
     fetchUserDetails();
-  }, [token, setIslogedIN]);
+  }, [token]);
 
   const handleOnClickSignup = async (e) => {
     e.preventDefault();
@@ -64,10 +64,11 @@ export default function Home() {
       }),
     });
     const result = await response.json();
-    if (response.ok) {
+    try {
       setToken(result);
       fetchUserDetails();
-    }
+    } catch (err) {}
+    console.log(result.response);
   };
 
   const handleOnClickLogin = async (e) => {

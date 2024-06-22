@@ -2,37 +2,53 @@ import NoteContext from "./NoteContext";
 import { useState, useEffect } from "react";
 
 const NoteState = (props) => {
-  localStorage.setItem("isLogedIn", "logedOut");
-  const initIsLoggedin = localStorage.getItem("isLogedIn");
+  // Initial state setup with JSON.parse and default values
+  const initIsLoggedin = JSON.parse(localStorage.getItem("isLogedIn")) || null; // Modified: Ensure this initializes as null if not found
   const initNotes = JSON.parse(localStorage.getItem("notes")) || [];
-  const initToken = localStorage.getItem("token");
-  const initNoteInView = JSON.parse(localStorage.getItem("noteInView")) || {
-    id: null,
-    title: "",
-    description: "",
-  };
-  const initLoginSignup = localStorage.getItem("loginSignup");
+  const initToken = localStorage.getItem("token") || "";
+  const initNoteInView = JSON.parse(localStorage.getItem("noteInView")) || { id: null, title: "", description: "" };
+  const initLoginSignup = localStorage.getItem("loginSignup") || "login";
+
   const [notes, setNotes] = useState(initNotes);
   const [token, setToken] = useState(initToken);
   const [loginSignup, setLoginSignup] = useState(initLoginSignup);
   const [noteInView, setNoteInView] = useState(initNoteInView);
   const [isLogedIn, setIslogedIN] = useState(initIsLoggedin);
+
+  const updateLocalStorage = (key, value) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (e) {
+      console.error(`LocalStorage quota exceeded for ${key}`, e);
+    }
+  };
+
   useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
+    updateLocalStorage("notes", notes);
   }, [notes]);
+
   useEffect(() => {
-    localStorage.setItem("isLogedIn", isLogedIn);
+    updateLocalStorage("isLogedIn", isLogedIn); // Modified: Ensure isLogedIn is properly updated
   }, [isLogedIn]);
+
   useEffect(() => {
     localStorage.setItem("loginSignup", loginSignup);
   }, [loginSignup]);
+
   useEffect(() => {
     localStorage.setItem("token", token);
   }, [token]);
 
   useEffect(() => {
-    localStorage.setItem("noteInView", JSON.stringify(noteInView));
+    updateLocalStorage("noteInView", noteInView);
   }, [noteInView]);
+
+  // Modified: Ensure isLogedIn is reset when there's no user logged in
+  useEffect(() => {
+    if (!token) {
+      setIslogedIN(null);
+    }
+  }, [token]);
 
   const fetchAllNotes = async () => {
     const response = await fetch("http://localhost:5000/api/notes/fetch-all-notes", {
@@ -49,6 +65,7 @@ const NoteState = (props) => {
       setNotes([]);
     }
   };
+
   return (
     <NoteContext.Provider
       value={{
@@ -63,7 +80,8 @@ const NoteState = (props) => {
         setLoginSignup,
         isLogedIn,
         setIslogedIN,
-      }}>
+      }}
+    >
       {props.children}
     </NoteContext.Provider>
   );

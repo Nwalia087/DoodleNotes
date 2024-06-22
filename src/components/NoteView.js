@@ -4,7 +4,7 @@ import NoteContext from "../context/NoteContext";
 import { useNavigate } from "react-router-dom";
 
 const ViewNote = () => {
-  const { noteInView, notes } = useContext(NoteContext);
+  const { noteInView, notes, isLogedIn, token } = useContext(NoteContext);
   const note = notes.find((n) => n._id === noteInView.id);
   const [viewTitle, setViewTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -18,6 +18,31 @@ const ViewNote = () => {
   const handleOnClickBackButton = () => {
     navigate("/your-notes");
   };
+  const handleOnClickEdit = async (e) => {
+    e.preventDefault();
+    const response = await fetch(`http://localhost:5000/api/notes/update-notes/${noteInView.id}`, {
+      method: "PUT",
+      headers: {
+        "auth-token": token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: viewTitle,
+        description: description,
+      }),
+    });
+  };
+
+  const handleOnClickDelete = async (e) => {
+    e.preventDefault();
+    const response = await fetch(`http://localhost:5000/api/notes/delete-notes/${noteInView.id}`, {
+      method: "DELETE",
+      headers: {
+        "auth-token": token,
+      },
+    });
+  };
+
   return (
     <form>
       <div className="mb-3">
@@ -37,12 +62,15 @@ const ViewNote = () => {
         <div id="emailHelp" className="form-text"></div>
       </div>
       <div className="mb-3">
-        <div className="form-floating">
-          <label htmlFor="floatingTextarea2">
+        <div className="form-floating ">
+          <label
+            htmlFor="floatingTextarea2 "
+            style={{ position: "relative", padding: "0", overflow: "clip" }}
+            className="form-label">
             <h5>Description</h5>
           </label>
           <textarea
-            className="form-control"
+            className="form-control "
             placeholder="Describe your note here"
             id="floatingTextarea2"
             style={{ color: "black", height: "300px", caretColor: "black" }}
@@ -53,10 +81,10 @@ const ViewNote = () => {
       <button type="submit" onClick={handleOnClickBackButton} className="btn btn-primary">
         Back To Your Notes
       </button>
-      <button type="submit" className="btn mx-3 btn-warning">
+      <button type="submit" onClick={handleOnClickEdit} className="btn mx-3 btn-warning">
         Edit Note
       </button>
-      <button type="submit" className="btn btn-danger">
+      <button type="submit" onClick={handleOnClickDelete} className="btn btn-danger">
         Delete Note
       </button>
     </form>

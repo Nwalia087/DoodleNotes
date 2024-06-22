@@ -26,8 +26,8 @@ export default function Navbar() {
   const activeDropDownItem = getActiveDropDownItem();
   return (
     <>
-      <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-        <Link className="navbar-brand" to="/">
+      <nav className="navbar bg-white fixed-top navbar-expand-lg navbar-light">
+        <Link className="ms-5 navbar-brand" to="/">
           <img src={postItImage} width="30" height="30" className=" d-inline-block align-top mx-2" alt="" />
           <span className="text-warning">I</span>
           <span style={{ color: " #29a4d9" }}>N</span>oteBook
@@ -45,36 +45,48 @@ export default function Navbar() {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li style={{ width: "108px" }} className={`text-center nav-item dropdown`}>
-              <Link
-                className="nav-link dropdown-toggle"
-                to="/"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false">
-                {activeDropDownItem}
-              </Link>
-              <ul className="dropdown-menu py-0">
-                <li>
+            {token === "" ? (
+              <>
+                <li className={`nav-item ${path === "/about" ? "active" : ""}`}>
+                  <Link className="nav-link" to="/about">
+                    About
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li style={{ width: "108px" }} className={`text-center nav-item dropdown`}>
                   <Link
-                    id="NewNoteDropDownItem"
-                    className={`dropdown-item  ${path === "/add-new-note" ? "active" : ""}`}
-                    to="/add-new-note">
-                    New Note
+                    className="nav-link dropdown-toggle"
+                    to="/"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    {activeDropDownItem}
+                  </Link>
+                  <ul className="dropdown-menu py-0">
+                    <li>
+                      <Link
+                        id="NewNoteDropDownItem"
+                        className={`dropdown-item  ${path === "/add-new-note" ? "active" : ""}`}
+                        to="/add-new-note">
+                        New Note
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className={`dropdown-item  ${path === "/your-notes" ? "active" : ""}`} to="/your-notes">
+                        Your Notes
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li className={`nav-item ${path === "/about" ? "active" : ""}`}>
+                  <Link className="nav-link" to="/about">
+                    About
                   </Link>
                 </li>
-                <li>
-                  <Link className={`dropdown-item  ${path === "/your-notes" ? "active" : ""}`} to="/your-notes">
-                    Your Notes
-                  </Link>
-                </li>
-              </ul>
-            </li>
-            <li className={`nav-item ${path === "/about" ? "active" : ""}`}>
-              <Link className="nav-link" to="/about">
-                About
-              </Link>
-            </li>
+              </>
+            )}
           </ul>
         </div>
       </nav>
