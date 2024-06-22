@@ -44,8 +44,9 @@ export default function About() {
               Always Accessible:
             </h5>
             <p className="card-text">
-              Access your notes anytime, anywhere, from your phone, tablet, or computer. [App Name] keeps your thoughts
-              with you, wherever you go.
+              Access your notes anytime, anywhere, from your phone, tablet, or computer.{" "}
+              <span style={{ color: "#ffc105" }}>I</span>
+              <span style={{ color: "#2ba5da" }}>N</span>otebook keeps your thoughts with you, wherever you go.
             </p>
           </div>
         </div>

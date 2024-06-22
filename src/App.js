@@ -7,7 +7,8 @@ import NoteState from "./context/NoteState";
 import YourNotes from "./components/YourNotes";
 import AddNewNote from "./components/AddNewNote";
 import ViewNote from "./components/NoteView";
-
+//also add deleteConfirmations and alerts for adding note, editing note etc.
+// signup button disabled to enabled functionality
 function App() {
   return (
     <>

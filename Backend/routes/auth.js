@@ -12,9 +12,10 @@ const { body, validationResult } = require("express-validator");
 router.post(
   "/create-user",
   [
-    body("Username", "enter a valid Email").isEmail(),
-    body("password", "password must be 5 characters long").isLength({ min: 5 }),
     body("name", "enter a valid name").isLength({ min: 3 }),
+    body("Username", "enter a valid Email").isEmail(),
+    body("password", "password field cannot be empty").isLength({ min: 1 }),
+    body("password", "password must be 5 characters long").isLength({ min: 5 }),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -24,7 +25,9 @@ router.post(
     try {
       let user = await User.findOne({ Username: req.body.Username });
       if (user) {
-        return res.status(400).json({ error: "you already have an account, please login with your credentials" });
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "You already have an account, please login with your credentials" }] });
       }
       const salt = await bcrypt.genSalt(10);
       const securePassword = await bcrypt.hash(req.body.password, salt);

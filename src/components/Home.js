@@ -3,6 +3,7 @@ import gifImg from "../assets/output-onlinegiftools.gif";
 import NoteContext from "../context/NoteContext";
 
 export default function Home() {
+  const [alertMessage, setAlertMessage] = useState("");
   const [newUser, setNewUser] = useState({
     name: "",
     Username: "",
@@ -14,7 +15,7 @@ export default function Home() {
   });
   const [userLogedIn, setUserLogedIn] = useState("user");
   const context = useContext(NoteContext);
-  const { loginSignup, setLoginSignup, token, setToken, setIslogedIN, islogedIN, setNotes, setNoteInView } = context;
+  const { loginSignup, setLoginSignup, token, setToken, setIslogedIN, setNotes, setNoteInView } = context;
 
   const changeToSignup = () => {
     setLoginSignup("signup");
@@ -52,23 +53,37 @@ export default function Home() {
 
   const handleOnClickSignup = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/auth/create-user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: newUser.name,
-        Username: newUser.Username,
-        password: newUser.password,
-      }),
-    });
-    const result = await response.json();
     try {
-      setToken(result);
-      fetchUserDetails();
-    } catch (err) {}
-    console.log(result.response);
+      const response = await fetch("http://localhost:5000/api/auth/create-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: newUser.name,
+          Username: newUser.Username,
+          password: newUser.password,
+        }),
+      });
+      const result = await response.json();
+
+      if (!response.ok) {
+        // Check if the error message indicates an already existing user
+        const errorMessage = result.errors && result.errors[0] && result.errors[0].msg;
+        if (errorMessage === "You already have an account, please login with your credentials") {
+          setAlertMessage(errorMessage);
+        } else {
+          setAlertMessage(errorMessage);
+        }
+      } else {
+        setToken(result);
+        fetchUserDetails();
+        setAlertMessage("");
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+      alert("An unexpected error occurred. Please try again later.");
+    }
   };
 
   const handleOnClickLogin = async (e) => {
@@ -185,6 +200,19 @@ export default function Home() {
                     <b>SignUp</b>
                   </button>
                 </form>
+                {alertMessage && (
+                  <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                    {alertMessage}
+                    <button
+                      type="button"
+                      class="btn-close"
+                      onClick={() => {
+                        setAlertMessage("");
+                      }}
+                      data-bs-dismiss="alert"
+                      aria-label="Close"></button>
+                  </div>
+                )}
                 <div className="d-flex mt-4 align-items-center">
                   <h5 className="m-0">Already have an Account?</h5>
                   <button type="button" onClick={changeToLogin} className="mx-3 px-3 btn btn-warning text-light">

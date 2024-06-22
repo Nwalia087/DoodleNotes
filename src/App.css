@@ -81,6 +81,17 @@ body {
 .abnormalLabel {
   color: #ffc105;
 }
-.btn-warning{
+.btn-warning {
   color: white;
+}
+.alert {
+  position: absolute;
+  top: -10%;
+  z-index: 11000;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.alert > .btn-close {
+  transform: scale(0.6);
+  margin-top: 2px;
 }

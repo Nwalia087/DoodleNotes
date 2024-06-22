@@ -4,7 +4,7 @@ import NoteContext from "../context/NoteContext";
 import { useNavigate } from "react-router-dom";
 
 const ViewNote = () => {
-  const { noteInView, notes, isLogedIn, token } = useContext(NoteContext);
+  const { noteInView, notes, token } = useContext(NoteContext);
   const note = notes.find((n) => n._id === noteInView.id);
   const [viewTitle, setViewTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -41,6 +41,7 @@ const ViewNote = () => {
         "auth-token": token,
       },
     });
+    navigate("/your-notes");
   };
 
   return (
