@@ -3,6 +3,7 @@ import gifImg from "../assets/output-onlinegiftools.gif";
 import NoteContext from "../context/NoteContext";
 
 export default function Home() {
+  const [submitable, setSubmitable] = useState({ signup: false, login: false });
   const [alertMessage, setAlertMessage] = useState("");
   const [newUser, setNewUser] = useState({
     name: "",
@@ -47,9 +48,21 @@ export default function Home() {
       }
     }
   };
-  useEffect(() => {
+  /* useEffect(() => {
     fetchUserDetails();
   }, [token]);
+  useEffect(() => {
+    if (loginUser.password.length >= 5) {
+      setSubmitable(true);
+    } else if (newUser.name.length >= 3) {
+      setSubmitable(true);
+    } else if (newUser.password.length >= 5) {
+      setSubmitable(true);
+    } else {
+      setSubmitable(false);
+    }
+    console.log(submitable);
+  }, [loginUser, newUser]); */
 
   const handleOnClickSignup = async (e) => {
     e.preventDefault();
@@ -88,20 +101,35 @@ export default function Home() {
 
   const handleOnClickLogin = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/auth/login-user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        Username: loginUser.Username,
-        password: loginUser.password,
-      }),
-    });
-    const result = await response.json();
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/login-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Username: loginUser.Username,
+          password: loginUser.password,
+        }),
+      });
+      const result = await response.json();
 
-    if (response.ok) {
-      setToken(result);
+      if (!response.ok) {
+        const errorMessage = result.errors && result.errors[0] && result.errors[0].msg;
+
+        if (errorMessage === "please enter valid credentials") {
+          setAlertMessage(errorMessage);
+        } else {
+          setAlertMessage(errorMessage);
+        }
+      } else {
+        setToken(result);
+        fetchUserDetails();
+        setAlertMessage("");
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+      alert("An unexpected error occurred. Please try again later.");
     }
   };
   return (
@@ -145,8 +173,21 @@ export default function Home() {
                       autoComplete="current-password"
                     />
                   </div>
+                  {alertMessage && (
+                    <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                      {alertMessage}
+                      <button
+                        type="button"
+                        className="btn-close"
+                        onClick={() => {
+                          setAlertMessage("");
+                        }}
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+                    </div>
+                  )}
 
-                  <button type="submit" className="btn px-4 btn-primary">
+                  <button type="submit" className={`btn px-4 btn-primary `}>
                     <b>Login</b>
                   </button>
                 </form>
@@ -196,7 +237,7 @@ export default function Home() {
                     />
                   </div>
 
-                  <button type="submit" className="btn px-4 btn-primary">
+                  <button type="submit" className={`btn px-4 btn-primary `}>
                     <b>SignUp</b>
                   </button>
                 </form>
@@ -205,7 +246,7 @@ export default function Home() {
                     {alertMessage}
                     <button
                       type="button"
-                      class="btn-close"
+                      className="btn-close"
                       onClick={() => {
                         setAlertMessage("");
                       }}

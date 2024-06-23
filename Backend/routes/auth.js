@@ -49,31 +49,37 @@ router.post(
     }
   }
 );
-
 router.post(
   "/login-user",
-  [body("Username", "enter a valid Email").isEmail(), body("password", "password cannot be blank").exists()],
+  [
+    body("Username", "Enter a valid Email").isEmail(),
+    body("password", "Password cannot be blank").isLength({ min: 1 }),
+  ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+
     const { Username, password } = req.body;
     try {
       const user = await User.findOne({ Username });
       if (!user) {
-        res.status(400).json("please enter valid credentials");
+        return res.status(400).json({ errors: [{ msg: "Please enter valid credentials" }] });
       }
+
       const passCompare = await bcrypt.compare(password, user.password);
       if (!passCompare) {
-        res.status(400).json("please enter valid credentials");
+        return res.status(400).json({ errors: [{ msg: "Please enter valid credentials" }] });
       }
+
       const data = {
         user: {
           id: user.id,
         },
       };
-      var token = jwt.sign(data, JWT_SECRET);
+
+      const token = jwt.sign(data, JWT_SECRET);
       res.json(token);
     } catch (error) {
       console.error(error.message);
@@ -81,6 +87,7 @@ router.post(
     }
   }
 );
+
 router.post("/get-user", fetchuser, async (req, res) => {
   try {
     userId = req.user.id;
