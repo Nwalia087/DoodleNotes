@@ -10,21 +10,21 @@ export default function About() {
   return (
     <>
       <h1>
-        Unleash Your Creativity with <span style={{ color: "#ffc105" }}>I</span>
-        <span style={{ color: "#2ba5da" }}>N</span>otebook!
+        Unleash Your Creativity with <span style={{ color: "#ffc105" }}>D</span>oodle
+        <span style={{ color: "#2ba5da" }}>N</span>otes!
       </h1>
       <p className="mt-4" style={{ fontSize: "18px" }}>
-        Welcome to <span style={{ color: "#ffc105" }}>INotebook</span>, your one-stop shop for capturing and organizing
+        Welcome to <span style={{ color: "#ffc105" }}>DoodleNotes</span>, your one-stop shop for capturing and organizing
         your thoughts online! We understand the power of a good idea, and we're here to help you turn those fleeting
         thoughts into something tangible. Whether you're a student jotting down lecture notes, a writer crafting your
         next masterpiece, or a busy professional managing your to-do list,{" "}
-        <span style={{ color: "#2ba5da" }}>INotebook</span> provides a secure and convenient platform to store your
+        <span style={{ color: "#2ba5da" }}>DoodleNotes</span> provides a secure and convenient platform to store your
         notes online.
       </p>
 
       <h3 className="mt-5">
-        Here's why you'll love <span style={{ color: "#ffc105" }}>I</span>
-        <span style={{ color: "#2ba5da" }}>N</span>otebook:
+        Here's why you'll love <span style={{ color: "#ffc105" }}>D</span>oodle
+        <span style={{ color: "#2ba5da" }}>N</span>otes:
       </h3>
       <div className="d-flex flex-wrap justify-content-around">
         <div className="card my-3" style={{ width: "24rem" }}>
@@ -45,8 +45,8 @@ export default function About() {
             </h5>
             <p className="card-text">
               Access your notes anytime, anywhere, from your phone, tablet, or computer.{" "}
-              <span style={{ color: "#ffc105" }}>I</span>
-              <span style={{ color: "#2ba5da" }}>N</span>otebook keeps your thoughts with you, wherever you go.
+              <span style={{ color: "#ffc105" }}>D</span>oodle
+              <span style={{ color: "#2ba5da" }}>N</span>otes keeps your thoughts with you, wherever you go.
             </p>
           </div>
         </div>
@@ -97,8 +97,8 @@ export default function About() {
       </div>
       <div className="my-5 d-flex justify-content-between align-items-center">
         <h2 className="">
-          Join the <span style={{ color: "#ffc105" }}>I</span>
-          <span style={{ color: "#2ba5da" }}>N</span>otebook community and unlock your creative potential!
+          Join the <span style={{ color: "#ffc105" }}>D</span>oodle
+          <span style={{ color: "#2ba5da" }}>N</span>otes community and unlock your creative potential!
         </h2>
         <button type="button" onClick={goToHome} className="btn px-4 btn-warning text-light">
           <b>SignUp/Login</b>

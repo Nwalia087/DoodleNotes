@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import gifImg from "../assets/output-onlinegiftools.gif";
 import NoteContext from "../context/NoteContext";
 
 export default function Home() {
-  const [submitable, setSubmitable] = useState({ signup: false, login: false });
   const [alertMessage, setAlertMessage] = useState("");
   const [newUser, setNewUser] = useState({
     name: "",
@@ -43,26 +42,12 @@ export default function Home() {
       });
       const result = await response.json();
       if (response.ok) {
+        console.log(result.name);
         setIslogedIN({ name: result.name, id: result._id });
         setUserLogedIn(result.name);
       }
     }
   };
-  /* useEffect(() => {
-    fetchUserDetails();
-  }, [token]);
-  useEffect(() => {
-    if (loginUser.password.length >= 5) {
-      setSubmitable(true);
-    } else if (newUser.name.length >= 3) {
-      setSubmitable(true);
-    } else if (newUser.password.length >= 5) {
-      setSubmitable(true);
-    } else {
-      setSubmitable(false);
-    }
-    console.log(submitable);
-  }, [loginUser, newUser]); */
 
   const handleOnClickSignup = async (e) => {
     e.preventDefault();
@@ -90,7 +75,6 @@ export default function Home() {
         }
       } else {
         setToken(result);
-        fetchUserDetails();
         setAlertMessage("");
       }
     } catch (error) {
@@ -124,7 +108,7 @@ export default function Home() {
         }
       } else {
         setToken(result);
-        fetchUserDetails();
+        console.log(token);
         setAlertMessage("");
       }
     } catch (error) {
@@ -132,11 +116,15 @@ export default function Home() {
       alert("An unexpected error occurred. Please try again later.");
     }
   };
+  useEffect(() => {
+    fetchUserDetails();
+  }, [token]);
+
   return (
     <div className="HeroContent mt--5 position-relative" style={{ caretColor: "transparent" }}>
       <h1 style={{ fontSize: "6rem" }}>
-        Welcome to <span className="text-warning">I</span>
-        <span style={{ color: " #29a4d9" }}>N</span>oteBook
+        Welcome to <span className="text-warning">D</span>oodle
+        <span style={{ color: " #29a4d9" }}>N</span>otes
       </h1>
       <h4 style={{ color: " #29a4d9" }}>
         An easy and safe way to store and access your

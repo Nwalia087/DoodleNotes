@@ -29,8 +29,8 @@ export default function Navbar() {
       <nav className="navbar bg-white fixed-top navbar-expand-lg navbar-light">
         <Link className="ms-5 navbar-brand" to="/">
           <img src={postItImage} width="30" height="30" className=" d-inline-block align-top mx-2" alt="" />
-          <span className="text-warning">I</span>
-          <span style={{ color: " #29a4d9" }}>N</span>oteBook
+          <span className="text-warning">D</span>oodle
+          <span style={{ color: " #29a4d9" }}>N</span>otes
         </Link>
         <button
           className="navbar-toggler"
