@@ -32,6 +32,7 @@ export default function Home() {
     setToken("");
     setLoginSignup("login"); // Set loginSignup to "login"
   };
+  
   const fetchUserDetails = async () => {
     if (token) {
       const response = await fetch("http://localhost:5000/api/auth/get-user", {

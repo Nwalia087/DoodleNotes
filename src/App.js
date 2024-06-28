@@ -9,6 +9,7 @@ import AddNewNote from "./components/AddNewNote";
 import ViewNote from "./components/NoteView";
 //also add deleteConfirmations and alerts for adding note, editing note etc.
 // signup button disabled to enabled functionality
+// when note added add alert and redirect to your notes page
 function App() {
   return (
     <>
