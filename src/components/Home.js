@@ -35,7 +35,7 @@ export default function Home() {
   
   const fetchUserDetails = async () => {
     if (token) {
-      const response = await fetch("http://localhost:5000/api/auth/get-user", {
+      const response = await fetch("https://doodlenotes.onrender.com/api/auth/get-user", {
         method: "POST",
         headers: {
           "auth-token": token,
@@ -53,7 +53,7 @@ export default function Home() {
   const handleOnClickSignup = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/auth/create-user", {
+      const response = await fetch("https://doodlenotes.onrender.com/api/auth/create-user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -87,7 +87,7 @@ export default function Home() {
   const handleOnClickLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login-user", {
+      const response = await fetch("https://doodlenotes.onrender.com/api/auth/login-user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
