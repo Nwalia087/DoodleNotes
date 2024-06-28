@@ -20,7 +20,7 @@ const ViewNote = () => {
   };
   const handleOnClickEdit = async (e) => {
     e.preventDefault();
-    const response = await fetch(`http://localhost:5000/api/notes/update-notes/${noteInView.id}`, {
+    const response = await fetch(`https://doodlenotes.onrender.com/api/notes/update-notes/${noteInView.id}`, {
       method: "PUT",
       headers: {
         "auth-token": token,
@@ -35,7 +35,7 @@ const ViewNote = () => {
 
   const handleOnClickDelete = async (e) => {
     e.preventDefault();
-    const response = await fetch(`http://localhost:5000/api/notes/delete-notes/${noteInView.id}`, {
+    const response = await fetch(`https://doodlenotes.onrender.com/api/notes/delete-notes/${noteInView.id}`, {
       method: "DELETE",
       headers: {
         "auth-token": token,

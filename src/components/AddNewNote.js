@@ -9,7 +9,7 @@ export default function AddNewNote() {
   const { token } = context;
   const addnewnote = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/notes/add-notes", {
+    const response = await fetch("https://doodlenotes.onrender.com/api/notes/add-notes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
