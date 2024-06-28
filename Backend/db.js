@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const mongoUri = "mongodb://localhost:27017/inotebook";
+const mongoUri = "mongodb+srv://nwalia087:nV99eZCbFi3zeYfk@cluster0.klytkk5.mongodb.net/";
 
 mongoose.connection.on("connected", () => {
   console.log("mongoose connected to ", mongoUri);
@@ -12,7 +12,7 @@ mongoose.connection.on("disconnected", () => {
 });
 const connectToMongo = async () => {
   try {
-    mongoose.connect(mongoUri );
+    mongoose.connect(mongoUri);
   } catch (err) {
     console.log("error connecting to mongoDB ", err);
   }
