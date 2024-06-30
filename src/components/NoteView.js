@@ -1,25 +1,32 @@
-// ViewNote.js
 import React, { useContext, useEffect, useState } from "react";
 import NoteContext from "../context/NoteContext";
 import { useNavigate } from "react-router-dom";
 
 const ViewNote = () => {
+  const [alertMessage, setAlertMessage] = useState("");
   const { noteInView, notes, token } = useContext(NoteContext);
   const note = notes.find((n) => n._id === noteInView.id);
   const [viewTitle, setViewTitle] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
+
   useEffect(() => {
     if (note) {
       setViewTitle(note.title);
       setDescription(note.description);
     }
   }, [note]);
-  const handleOnClickBackButton = () => {
+
+  const handleOnClickBackButton = (e) => {
+    e.preventDefault();
     navigate("/your-notes");
   };
+
   const handleOnClickEdit = async (e) => {
     e.preventDefault();
+
+    console.log("Edit button clicked");
+
     const response = await fetch(`https://doodlenotes.onrender.com/api/notes/update-notes/${noteInView.id}`, {
       method: "PUT",
       headers: {
@@ -31,17 +38,35 @@ const ViewNote = () => {
         description: description,
       }),
     });
+
+    const result = await response.json();
+    console.log("Edit response:", result);
+
+    setAlertMessage("Note updated");
+    setTimeout(() => {
+      setAlertMessage("");
+    }, 1000);
   };
 
   const handleOnClickDelete = async (e) => {
     e.preventDefault();
+
+    console.log("Delete button clicked");
+
     const response = await fetch(`https://doodlenotes.onrender.com/api/notes/delete-notes/${noteInView.id}`, {
       method: "DELETE",
       headers: {
         "auth-token": token,
       },
     });
-    navigate("/your-notes");
+
+    const result = await response.json();
+    console.log("Delete response:", result);
+
+    setAlertMessage("Note deleted");
+    setTimeout(() => {
+      setAlertMessage("");
+    }, 1000);
   };
 
   return (
@@ -79,15 +104,20 @@ const ViewNote = () => {
             onChange={(e) => setDescription(e.target.value)}></textarea>
         </div>
       </div>
-      <button type="submit" onClick={handleOnClickBackButton} className="btn btn-primary">
+      <button type="button" onClick={handleOnClickBackButton} className="btn btn-primary">
         Back To Your Notes
       </button>
-      <button type="submit" onClick={handleOnClickEdit} className="btn mx-3 btn-warning">
+      <button type="button" onClick={handleOnClickEdit} className="btn mx-3 btn-warning">
         Edit Note
       </button>
-      <button type="submit" onClick={handleOnClickDelete} className="btn btn-danger">
+      <button type="button" onClick={handleOnClickDelete} className="btn btn-danger">
         Delete Note
       </button>
+      {alertMessage && (
+        <div className="alert alert-success  fade show" role="alert" style={{ top: "15%" }}>
+          {alertMessage}
+        </div>
+      )}
     </form>
   );
 };
