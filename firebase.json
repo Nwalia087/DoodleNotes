@@ -1,0 +1,13 @@
+{
+  "hosting": {
+    "site": "doodlenotes-4dd7e",
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
