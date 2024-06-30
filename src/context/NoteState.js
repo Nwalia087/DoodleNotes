@@ -14,6 +14,7 @@ const NoteState = (props) => {
   const [loginSignup, setLoginSignup] = useState(initLoginSignup);
   const [noteInView, setNoteInView] = useState(initNoteInView);
   const [isLogedIn, setIslogedIN] = useState(initIsLoggedin);
+  const [progress, setProgress] = useState(0);
 
   const updateLocalStorage = (key, value) => {
     try {
@@ -51,7 +52,7 @@ const NoteState = (props) => {
   }, [token]);
 
   const fetchAllNotes = async () => {
-    const response = await fetch("http://localhost:5000/api/notes/fetch-all-notes", {
+    const response = await fetch("https://doodlenotes.onrender.com/api/notes/fetch-all-notes", {
       method: "GET",
       headers: {
         "auth-token": token,
@@ -80,8 +81,9 @@ const NoteState = (props) => {
         setLoginSignup,
         isLogedIn,
         setIslogedIN,
-      }}
-    >
+        progress,
+        setProgress,
+      }}>
       {props.children}
     </NoteContext.Provider>
   );
