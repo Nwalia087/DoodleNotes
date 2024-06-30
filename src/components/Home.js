@@ -15,7 +15,7 @@ export default function Home() {
   });
   const [userLogedIn, setUserLogedIn] = useState("user");
   const context = useContext(NoteContext);
-  const { loginSignup, setLoginSignup, token, setToken, setIslogedIN, setNotes, setNoteInView } = context;
+  const { loginSignup, setLoginSignup, token, setToken, setIslogedIN, setNotes, setNoteInView, setProgress } = context;
 
   const changeToSignup = () => {
     setLoginSignup("signup");
@@ -25,14 +25,19 @@ export default function Home() {
     setLoginSignup("login");
   };
   const onLogout = () => {
+    setProgress(20);
     setIslogedIN("");
+    setProgress(40);
     setUserLogedIn("");
+    setProgress(60);
     setNotes([]);
+    setProgress(80);
     setNoteInView({ description: "", id: null, title: "" });
     setToken("");
     setLoginSignup("login"); // Set loginSignup to "login"
+    setProgress(100);
   };
-  
+
   const fetchUserDetails = async () => {
     if (token) {
       const response = await fetch("https://doodlenotes.onrender.com/api/auth/get-user", {
@@ -53,6 +58,7 @@ export default function Home() {
   const handleOnClickSignup = async (e) => {
     e.preventDefault();
     try {
+      setProgress(10);
       const response = await fetch("https://doodlenotes.onrender.com/api/auth/create-user", {
         method: "POST",
         headers: {
@@ -66,6 +72,7 @@ export default function Home() {
       });
       const result = await response.json();
 
+      setProgress(40);
       if (!response.ok) {
         // Check if the error message indicates an already existing user
         const errorMessage = result.errors && result.errors[0] && result.errors[0].msg;
@@ -75,6 +82,7 @@ export default function Home() {
           setAlertMessage(errorMessage);
         }
       } else {
+        setProgress(70);
         setToken(result);
         setAlertMessage("");
       }
@@ -82,11 +90,13 @@ export default function Home() {
       console.error("Error during signup:", error);
       alert("An unexpected error occurred. Please try again later.");
     }
+    setProgress(100);
   };
 
   const handleOnClickLogin = async (e) => {
     e.preventDefault();
     try {
+      setProgress(10);
       const response = await fetch("https://doodlenotes.onrender.com/api/auth/login-user", {
         method: "POST",
         headers: {
@@ -98,6 +108,7 @@ export default function Home() {
         }),
       });
       const result = await response.json();
+      setProgress(40);
 
       if (!response.ok) {
         const errorMessage = result.errors && result.errors[0] && result.errors[0].msg;
@@ -109,13 +120,15 @@ export default function Home() {
         }
       } else {
         setToken(result);
-        console.log(token);
         setAlertMessage("");
+        setProgress(80);
       }
     } catch (error) {
       console.error("Error during signup:", error);
       alert("An unexpected error occurred. Please try again later.");
     }
+
+    setProgress(100);
   };
   useEffect(() => {
     fetchUserDetails();
