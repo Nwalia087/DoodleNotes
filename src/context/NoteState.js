@@ -53,7 +53,7 @@ const NoteState = (props) => {
 
   const fetchAllNotes = async () => {
     const response = await fetch("https://doodlenotes.onrender.com/api/notes/fetch-all-notes", {
-      method: "GET",
+      method: "POST",
       headers: {
         "auth-token": token,
         "Content-Type": "application/json",
