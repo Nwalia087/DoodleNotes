@@ -48,7 +48,6 @@ export default function Home() {
       });
       const result = await response.json();
       if (response.ok) {
-        console.log(result.name);
         setIslogedIN({ name: result.name, id: result._id });
         setUserLogedIn(result.name);
       }
