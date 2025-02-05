@@ -60,7 +60,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
+    console.log("iusafeaef")
     const { Username, password } = req.body;
     try {
       const user = await User.findOne({ Username });
